@@ -46,14 +46,23 @@ function abrirModal(id) {
 // Adicionando os eventos para abrir os modais
 document.querySelectorAll('.menu a').forEach(item => {
     item.addEventListener('click', (event) => {
+        // Extrair o ID do modal a partir do atributo 'onclick'
         const modalId = event.target.getAttribute('onclick').split("'")[1];
         abrirModal(modalId);
+        
+        // Fechar o menu após o clique em um item
+        if (window.innerWidth <= 768) {  // Fechar o menu apenas em telas pequenas
+            menu.classList.remove('active');
+            menuToggle.classList.remove('active');
+        }
     });
 });
 
 // Fechar o modal ao clicar fora
 document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('click', () => {
-        modal.style.display = 'none';
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {  // Fechar apenas se clicar fora do conteúdo do modal
+            modal.style.display = 'none';
+        }
     });
 });
